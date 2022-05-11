@@ -1,8 +1,7 @@
 # PHP
 
 ## 1. Instalação
-    [Instalar XAMPP](https://www.apachefriends.org/index.html)
-    My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
+    [exemplo](https://exemplo.com/).
     
     display_errors = On
     memory_limit = 256M
