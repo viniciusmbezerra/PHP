@@ -1,2 +1,4 @@
 # PHP
-conteúdo sobre a linguagem
+
+## 1. Instalação
+  instale o xampp
