@@ -38,7 +38,7 @@
 Arquivos do projeto -> C:\xampp\htdocs\nome_projeto.<br>
 Acessar a aplicação -> <http://localhost/nome_projeto>.
 
-1. Avisos de erro no PHP:
+5. Avisos de erro no PHP:
     * ``Notice``: nível de erro baixo, "olha provavelmente você não deveria ter feito esse código fonte, mas ok, a gente consegue viver com isso";
     * ``Warning``: nível de erro mais severo, "olha você está fazendo uma coisa errada, isso pode te causar problemas mais na frente", mas o php ainda consegue se virar com isso;
     * ``Fatal error``: nível de erro grave, "o programa aborta a execução na mesma hora";
