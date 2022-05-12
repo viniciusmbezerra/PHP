@@ -46,238 +46,241 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
 
 ## 2. Estrutura
 
-1. Estrutura do código
+```php
+<?php 
 
-    ```php
-    <?php 
-
-        $a = 'bonito';
-        echo 'Olá Mundo, ', $a;
-        print 'Ola';
-        print_r($a);
-        var_dump($a);
-
-        // isso é um comentário.
-        /*
-            * j
-            * j
-            * j
-            * j
-            * */
-
-    ?>
-    ```
-
-2. Variáveis
-
-    ```php
-    <?php
-    //declaração
-    $nome='João';
-    $sobrenome='Silva';
-
-    //concatenação
-    print $nome.' '.$sobrenome;
-    print "{$nome} {$sobrenome}";
-    print '<br>';
-
-    //aspas
-    print " '' ";
-    print ' "" ';
-    print " \"{$nome}\" ";
-    print '<br>';
-
-    //mutiplicação
-    $a=5;
-    $b='4ff';
-    var_dump($a * $b);
-    print '<br>';
-
-    //atribuição com referência
-    $a=5;
-    $b=&$a;
-    $a=10;
+    $a = 'bonito';
+    echo 'Olá Mundo, ', $a;
+    print 'Ola';
+    print_r($a);
     var_dump($a);
-    var_dump($b);
-    print '<br>';
 
-    //booleano
-    /* false:
-    0
-    0.0
-    ''
-    '0'
-    NULL
-    FALSE
-    array
-    */
-    $var = '0';
-    empty($var);
-    !empty($var);
+    // isso é um comentário.
+    /*
+        * j
+        * j
+        * j
+        * j
+        * */
 
-    //vetor
-    $lista = ['cor' => 'vermelho', 'peso' => 20];
+?>
+```
 
-    //objeto, sempre passado com referência
-    $pessoa1 = new stdClass;
-    $pessoa1->nome = 'Pedro';
-    $pessoa1->altura = 1.8;
+## 2. Variáveis
 
-    $pessoa2=$pessoa1;
-    var_dump($pessoa1);
-    print '<br>';
-    var_dump($pessoa2);
-    print '<br>';
+```php
+<?php
+//declaração
+$nome='João';
+$sobrenome='Silva';
 
-    ?>
-    ```
+//concatenação
+print $nome.' '.$sobrenome;
+print "{$nome} {$sobrenome}";
+print '<br>';
 
-3. Tipagem
-    * O PHP é uma linguagem dinamicamente tipada, com inferência;
+//aspas
+print " '' ";
+print ' "" ';
+print " \"{$nome}\" ";
+print '<br>';
 
-    ```php
-    <?php
+//mutiplicação
+$a=5;
+$b='4ff';
+var_dump($a * $b);
+print '<br>';
 
-    //tipagem restrita
-    //declare(strict_types=1);
+//atribuição com referência
+$a=5;
+$b=&$a;
+$a=10;
+var_dump($a);
+var_dump($b);
+print '<br>';
 
-    //inferência no tipo
-    $codigo = 5.5;
-    $nome = 'teste';
-    var_dump($codigo);
-    var_dump($nome);
+//booleano
+/* false:
+0
+0.0
+''
+'0'
+NULL
+FALSE
+array
+*/
+$var = '0';
+empty($var);
+!empty($var);
 
-    //conversão automática
-    var_dump('4'+'5');
+//vetor
+$lista = ['cor' => 'vermelho', 'peso' => 20];
 
-    //forçar conversão
-    function calcula_imc(float $peso, float $altura): float 
-    {
-        var_dump($peso, $altura);
-        return $peso/($altura*$altura);
-    }
-    var_dump(calcula_imc(75, 1.8));
+//objeto, sempre passado com referência
+$pessoa1 = new stdClass;
+$pessoa1->nome = 'Pedro';
+$pessoa1->altura = 1.8;
 
-    ?>
-    ```
+$pessoa2=$pessoa1;
+var_dump($pessoa1);
+print '<br>';
+var_dump($pessoa2);
+print '<br>';
 
-4. Superglobais
-   * Uma variável superglobal estará disponível em qualquer escopo e arquivo;
-  
-    ```php
-    <?php
-    //informações gerais sobre o servidor
-    var_dump($_SERVER);
+?>
+```
 
-    //dados enviados via url
-    var_dump($_GET);
+## 3. Tipagem
 
-    //dados enviados via formulário do tipo post
-    var_dump($_POST);
+* O PHP é uma linguagem dinamicamente tipada, com inferência;
 
-    //arquivos de upload
-    var_dump($_FILES);
+```php
+<?php
 
-    //tem acesso aos dados de entrada, get, post, session
-    var_dump($_REQUEST);
+//tipagem restrita
+//declare(strict_types=1);
 
-    //uma sessão aberta que armazena qualquer dado
-    var_dump($_SESSION);
-    ?>
-    ```
+//inferência no tipo
+$codigo = 5.5;
+$nome = 'teste';
+var_dump($codigo);
+var_dump($nome);
 
-5. Constantes
-   * Valores que não podem ser alterados depois de definidos
+//conversão automática
+var_dump('4'+'5');
 
-   ```php
-    <?php
-    //definindo um constante
-    define('LANGUAGE', 'PT-BR');
-    var_dump( LANGUAGE );
+//forçar conversão
+function calcula_imc(float $peso, float $altura): float 
+{
+    var_dump($peso, $altura);
+    return $peso/($altura*$altura);
+}
+var_dump(calcula_imc(75, 1.8));
 
-    //constantes mágicas
-    var_dump( __FILE__  );//endereço do arquivo
-    var_dump( __LINE__ );//linha em que o comando se encontra
-    var_dump( __DIR__ );//diretório do arquivo
-    ?>
-   ```
+?>
+```
 
-6. Operadores
-   * Permitem realizar interações lógicas entre valores
+## 4. Superglobais
 
-    ```php
-    <?php
+* Uma variável superglobal estará disponível em qualquer escopo e arquivo;
 
-    //operações simples
-    $valor = 100;
-    $valor += 5;
-    $valor -= 5;
-    $valor *= 5;
-    $valor /= 5;
+```php
+<?php
+//informações gerais sobre o servidor
+var_dump($_SERVER);
 
-    //operador de incremento
-    $teste = $valor ++;//o incremento é realizado por último
-    $teste = ++ $valor;//o incremento é realizado primeiro
+//dados enviados via url
+var_dump($_GET);
 
-    //operadores de comparação
-    // < | > | <= | >= | == | === | != | !==
+//dados enviados via formulário do tipo post
+var_dump($_POST);
 
-    //operadores lógicos
-    // AND && | OR ||
+//arquivos de upload
+var_dump($_FILES);
 
-    ?>
-    ```
+//tem acesso aos dados de entrada, get, post, session
+var_dump($_REQUEST);
 
-7. Estruturas de controle
-   * Realizam operações com base em verificações
-  
-   ```php
-    <?php
+//uma sessão aberta que armazena qualquer dado
+var_dump($_SESSION);
+?>
+```
 
-    //if e else
-    if(true){
-        echo 'Verdadeiro';
-    }else{
-        echo 'False';
-    }
+## 5. Constantes
 
-    //operador ternário
-    echo (true)? 'verdadeiro': 'false';
+* Valores que não podem ser alterados depois de definidos
 
-    //loop com white
-    $cont = 1;
-    while($cont <= 5){
-        echo '<hr>'.$cont;
-        $cont ++;
-    }
+```php
+<?php
+//definindo um constante
+define('LANGUAGE', 'PT-BR');
+var_dump( LANGUAGE );
 
-    //loop com for
-    for($cont=1; $cont<=10; $cont++){
-        echo $cont.' '; 
-    }
+//constantes mágicas
+var_dump( __FILE__  );//endereço do arquivo
+var_dump( __LINE__ );//linha em que o comando se encontra
+var_dump( __DIR__ );//diretório do arquivo
+?>
+```
 
-    //verificação mútua com switch
-    $tipo = '';
-    switch ($tipo){
-        case 'pdf':
-            print 'arquivo pdf';
-            break;
-        case 'csv':
-            print 'arquivo csv';
-            break;
-        case 'doc':
-            print 'arquivo doc';
-            break;
-        default:
-        print 'arquivo default';
-            break;
-    }
+## 6. Operadores
 
-    //percorrer vetor com foreach
-    $lista = ['maça', 'laranja', 'banana'];
-    foreach ($lista as $fruta){
-        print $fruta.' ';
-    }
+* Permitem realizar interações lógicas entre valores
 
-    ?>
-   ```
+```php
+<?php
+
+//operações simples
+$valor = 100;
+$valor += 5;
+$valor -= 5;
+$valor *= 5;
+$valor /= 5;
+
+//operador de incremento
+$teste = $valor ++;//o incremento é realizado por último
+$teste = ++ $valor;//o incremento é realizado primeiro
+
+//operadores de comparação
+// < | > | <= | >= | == | === | != | !==
+
+//operadores lógicos
+// AND && | OR ||
+
+?>
+```
+
+## 7. Estruturas de controle
+
+* Realizam operações com base em verificações
+
+```php
+<?php
+
+//if e else
+if(true){
+    echo 'Verdadeiro';
+}else{
+    echo 'False';
+}
+
+//operador ternário
+echo (true)? 'verdadeiro': 'false';
+
+//loop com white
+$cont = 1;
+while($cont <= 5){
+    echo '<hr>'.$cont;
+    $cont ++;
+}
+
+//loop com for
+for($cont=1; $cont<=10; $cont++){
+    echo $cont.' '; 
+}
+
+//verificação mútua com switch
+$tipo = '';
+switch ($tipo){
+    case 'pdf':
+        print 'arquivo pdf';
+        break;
+    case 'csv':
+        print 'arquivo csv';
+        break;
+    case 'doc':
+        print 'arquivo doc';
+        break;
+    default:
+    print 'arquivo default';
+        break;
+}
+
+//percorrer vetor com foreach
+$lista = ['maça', 'laranja', 'banana'];
+foreach ($lista as $fruta){
+    print $fruta.' ';
+}
+
+?>
+```
