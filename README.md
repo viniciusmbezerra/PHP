@@ -160,3 +160,124 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
 
     ?>
     ```
+
+4. Superglobais
+   * Uma variável superglobal estará disponível em qualquer escopo e arquivo;
+  
+    ```php
+    <?php
+    //informações gerais sobre o servidor
+    var_dump($_SERVER);
+
+    //dados enviados via url
+    var_dump($_GET);
+
+    //dados enviados via formulário do tipo post
+    var_dump($_POST);
+
+    //arquivos de upload
+    var_dump($_FILES);
+
+    //tem acesso aos dados de entrada, get, post, session
+    var_dump($_REQUEST);
+
+    //uma sessão aberta que armazena qualquer dado
+    var_dump($_SESSION);
+    ?>
+    ```
+
+5. Constantes
+   * Valores que não podem ser alterados depois de definidos
+
+   ```php
+    <?php
+    //definindo um constante
+    define('LANGUAGE', 'PT-BR');
+    var_dump( LANGUAGE );
+
+    //constantes mágicas
+    var_dump( __FILE__  );//endereço do arquivo
+    var_dump( __LINE__ );//linha em que o comando se encontra
+    var_dump( __DIR__ );//diretório do arquivo
+    ?>
+   ```
+
+6. Operadores
+   * Permitem realizar interações lógicas entre valores
+
+    ```php
+    <?php
+
+    //operações simples
+    $valor = 100;
+    $valor += 5;
+    $valor -= 5;
+    $valor *= 5;
+    $valor /= 5;
+
+    //operador de incremento
+    $teste = $valor ++;//o incremento é realizado por último
+    $teste = ++ $valor;//o incremento é realizado primeiro
+
+    //operadores de comparação
+    // < | > | <= | >= | == | === | != | !==
+
+    //operadores lógicos
+    // AND && | OR ||
+
+    ?>
+    ```
+
+7. Estruturas de controle
+   * Realizam operações com base em verificações
+  
+   ```php
+    <?php
+
+    //if e else
+    if(true){
+        echo 'Verdadeiro';
+    }else{
+        echo 'False';
+    }
+
+    //operador ternário
+    echo (true)? 'verdadeiro': 'false';
+
+    //loop com white
+    $cont = 1;
+    while($cont <= 5){
+        echo '<hr>'.$cont;
+        $cont ++;
+    }
+
+    //loop com for
+    for($cont=1; $cont<=10; $cont++){
+        echo $cont.' '; 
+    }
+
+    //verificação mútua com switch
+    $tipo = '';
+    switch ($tipo){
+        case 'pdf':
+            print 'arquivo pdf';
+            break;
+        case 'csv':
+            print 'arquivo csv';
+            break;
+        case 'doc':
+            print 'arquivo doc';
+            break;
+        default:
+        print 'arquivo default';
+            break;
+    }
+
+    //percorrer vetor com foreach
+    $lista = ['maça', 'laranja', 'banana'];
+    foreach ($lista as $fruta){
+        print $fruta.' ';
+    }
+
+    ?>
+   ```
