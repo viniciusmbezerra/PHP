@@ -458,3 +458,45 @@ foreach ($arquivos as $arquivo){
 
 ?>
 ```
+
+## 12. Manipulação de Strings
+
+```php
+<?php
+
+$nome = 'Maria';
+$sobrenome = 'da Silva';
+
+//concatenando 2 strings
+$nome_completo = $nome . $sobrenome;
+$nome_completo = "$nome $sobrenome";//aspas duplas a string é interpretada
+$nome_completo = "xxx{$nome} - {$sobrenome}xxx";//chaves para colocar conteúdos junto com a string
+$nome_completo = '$nome $sobrenome';//aspas simples tratam como string literal
+
+var_dump($nome_completo);
+
+//aspas dentro de aspas
+print "Exemplo de 'aspas' ";
+print 'Exemplo de "aspas" ';
+print 'Exemplo de \'aspas\'';
+print "Exemplo de \"aspas\"";
+print '\t';//tabulação
+print '\n \r';//quebra de linha
+
+//funções de manipulação de strings
+print strtoupper($nome . $sobrenome);//tudo para caixa alta
+print strtolower($nome . $sobrenome);//tudo para caixa baixa
+print strlen($nome);//tamanho de uma string
+print substr($nome . $sobrenome, 6, 8);//retorna do 6º caracter ao 8º
+print substr($nome . $sobrenome, 0, 5);//retorna do caracter 0 ao 5º
+print substr($nome . $sobrenome, -3);//retorna os 3 últimos caracteres
+print str_replace('a', 'e', $nome . $sobrenome);//substituir caracteres
+
+?>
+```
+
+## 13. Manipulação de Arrays
+
+```php
+
+```
