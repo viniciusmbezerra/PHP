@@ -410,7 +410,7 @@ fwrite($handler, "linha3" . PHP_EOL);
 
 print file_get_contents('arquivos/teste1.txt');//pega todo o conteúdo do arquivo
 //lado bom: é bem simples
-//lado ruin: se o arquivo for grande vai pesar
+//lado ruim: se o arquivo for grande vai pesar
 
 file_put_contents('arquivos/teste1.txt', "a\n b\n c\n");//escreve no arquivo,\n só funciona em ""
 print file_get_contents('arquivos/teste1.txt');
