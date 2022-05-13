@@ -310,7 +310,7 @@ require_once 'arquivo.php';
 ```php
 <?php
 
-//variáveis declarada dentro de uma função só existem dentro do escopo de uma função
+//variáveis declaradas dentro de uma função só existem dentro do escopo de uma função
 $total = 0;
 function km2milhas($km)
 {
@@ -321,7 +321,7 @@ echo km2milhas(100);
 
 //o global define que uma variável pode ser acessada fora do contexto da função
 //NÃO É RECOMENDÁVEL, pois com uma variável fora de contexto perde-se o seu controle
-//ela poderia se altera em qualquer outro lugar do código
+//ela poderia ser alterada em qualquer outro lugar do código
 $total = 0;
 function km2milhas($km)
 {
@@ -385,6 +385,76 @@ function teste($palavra, $funcao)
     return strtoupper($palavra);
 }
 var_dump(teste('bábébíbóbú', $remove_acento));//passando função como parâmetro
+
+?>
+```
+
+## 11. Manipulação de Arquivos e Diretórios
+
+```php
+<?php
+
+$handler = fopen('arquivos/teste1.txt', 'r');//abre arquivo, modo read
+while (!feof($handler)){//feof, quando for a ultima linha retorna true
+    print fgets($handler, 100);//ler a linha de um arquivo, segundo parâmetro são o número de caracteres
+    print "<br>";
+}
+fclose($handler);
+
+//criação e escrita
+$handler = fopen('arquivos/teste2.text', 'w');//criando arquivo, modo escrita
+//escrevendo no arquivo
+fwrite($handler, "linha1" . PHP_EOL);
+fwrite($handler, "linha2" . PHP_EOL);
+fwrite($handler, "linha3" . PHP_EOL);
+
+print file_get_contents('arquivos/teste1.txt');//pega todo o conteúdo do arquivo
+//lado bom: é bem simples
+//lado ruin: se o arquivo for grande vai pesar
+
+file_put_contents('arquivos/teste1.txt', "a\n b\n c\n");//escreve no arquivo,\n só funciona em ""
+print file_get_contents('arquivos/teste1.txt');
+
+$arquivo = file('arquivos/teste1.txt');//lê um arquivo e transforma em vetor
+foreach ($arquivo as $linha)
+{
+    print $linha . '<br>';
+}
+//acessando linha
+$arquivo[0];
+$arquivo[1];
+$arquivo[2];
+$arquivo[3];
+
+//copiando arquivo
+copy('arquivos/teste1.txt', 'arquivos/novo.txt');
+
+//renomeando
+rename('arquivos/teste1.txt', 'arquivos/teste0.txt');
+
+//movendo
+rename('arquivos/teste1.txt', 'novo_direitorio/teste1.txt');
+
+//excluindo
+unlink('arquivos/teste1.txt');
+
+//verificando se existe
+if (file_exists('arquivos/teste1.txt'))
+{
+    echo "arquivo existe";
+}
+
+//criando diretório
+mkdir('novodir', 0777);//o segundo parâmetro são as permissões, 0777 são todas
+
+//excluir diretório
+rmdir('novodir');
+
+//pegar todos os arquivos e pastas de um diretório
+$arquivos = scandir('arquivos');
+foreach ($arquivos as $arquivo){
+    print $arquivo . '<br>';
+}
 
 ?>
 ```
