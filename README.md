@@ -30,9 +30,7 @@
     * abrir um arquivo php com o código:
 
         ```php
-        <?php 
             phpinfo(); 
-        ?>
         ```
 
 Arquivos do projeto -> C:\xampp\htdocs\nome_projeto.<br>
@@ -47,8 +45,6 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
 ## 2. Estrutura
 
 ```php
-<?php 
-
     $a = 'bonito';
     echo 'Olá Mundo, ', $a;
     print 'Ola';
@@ -62,14 +58,11 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
         * j
         * j
         * */
-
-?>
 ```
 
 ## 3. Variáveis
 
 ```php
-<?php
 //declaração
 $nome='João';
 $sobrenome='Silva';
@@ -126,8 +119,6 @@ var_dump($pessoa1);
 print '<br>';
 var_dump($pessoa2);
 print '<br>';
-
-?>
 ```
 
 ## 4. Tipagem
@@ -135,8 +126,6 @@ print '<br>';
 * O PHP é uma linguagem dinamicamente tipada, com inferência;
 
 ```php
-<?php
-
 //tipagem restrita
 //declare(strict_types=1);
 
@@ -156,8 +145,6 @@ function calcula_imc(float $peso, float $altura): float
     return $peso/($altura*$altura);
 }
 var_dump(calcula_imc(75, 1.8));
-
-?>
 ```
 
 ## 5. Superglobais
@@ -165,7 +152,6 @@ var_dump(calcula_imc(75, 1.8));
 * Uma variável superglobal estará disponível em qualquer escopo e arquivo;
 
 ```php
-<?php
 //informações gerais sobre o servidor
 var_dump($_SERVER);
 
@@ -183,7 +169,6 @@ var_dump($_REQUEST);
 
 //uma sessão aberta que armazena qualquer dado
 var_dump($_SESSION);
-?>
 ```
 
 ## 6. Constantes
@@ -191,7 +176,6 @@ var_dump($_SESSION);
 * Valores que não podem ser alterados depois de definidos
 
 ```php
-<?php
 //definindo um constante
 define('LANGUAGE', 'PT-BR');
 var_dump( LANGUAGE );
@@ -200,7 +184,6 @@ var_dump( LANGUAGE );
 var_dump( __FILE__  );//endereço do arquivo
 var_dump( __LINE__ );//linha em que o comando se encontra
 var_dump( __DIR__ );//diretório do arquivo
-?>
 ```
 
 ## 7. Operadores
@@ -208,8 +191,6 @@ var_dump( __DIR__ );//diretório do arquivo
 * Permitem realizar interações lógicas entre valores
 
 ```php
-<?php
-
 //operações simples
 $valor = 100;
 $valor += 5;
@@ -226,8 +207,6 @@ $teste = ++ $valor;//o incremento é realizado primeiro
 
 //operadores lógicos
 // AND && | OR ||
-
-?>
 ```
 
 ## 8. Estruturas de controle
@@ -235,8 +214,6 @@ $teste = ++ $valor;//o incremento é realizado primeiro
 * Realizam operações com base em verificações
 
 ```php
-<?php
-
 //if e else
 if(true){
     echo 'Verdadeiro';
@@ -281,15 +258,11 @@ $lista = ['maça', 'laranja', 'banana'];
 foreach ($lista as $fruta){
     print $fruta.' ';
 }
-
-?>
 ```
 
 ## 9. Requisição de arquivos
 
 ```php
-<?php
-
 //importam um arquivo para dentro de outro
 
 include 'arquivo.php';
@@ -301,15 +274,11 @@ require 'arquivo.php';
 include_once 'arquivo.php';
 require_once 'arquivo.php';
 //permite a importação desse aquivo uma única vez
-
-?>
 ```
 
 ## 10. Manipulação de funções
 
 ```php
-<?php
-
 //variáveis declaradas dentro de uma função só existem dentro do escopo de uma função
 $total = 0;
 function km2milhas($km)
@@ -385,15 +354,11 @@ function teste($palavra, $funcao)
     return strtoupper($palavra);
 }
 var_dump(teste('bábébíbóbú', $remove_acento));//passando função como parâmetro
-
-?>
 ```
 
 ## 11. Manipulação de Arquivos e Diretórios
 
 ```php
-<?php
-
 $handler = fopen('arquivos/teste1.txt', 'r');//abre arquivo, modo read
 while (!feof($handler)){//feof, quando for a ultima linha retorna true
     print fgets($handler, 100);//ler a linha de um arquivo, segundo parâmetro são o número de caracteres
@@ -455,15 +420,11 @@ $arquivos = scandir('arquivos');
 foreach ($arquivos as $arquivo){
     print $arquivo . '<br>';
 }
-
-?>
 ```
 
 ## 12. Manipulação de Strings
 
 ```php
-<?php
-
 $nome = 'Maria';
 $sobrenome = 'da Silva';
 
@@ -491,14 +452,100 @@ print substr($nome . $sobrenome, 6, 8);//retorna do 6º caracter ao 8º
 print substr($nome . $sobrenome, 0, 5);//retorna do caracter 0 ao 5º
 print substr($nome . $sobrenome, -3);//retorna os 3 últimos caracteres
 print str_replace('a', 'e', $nome . $sobrenome);//substituir caracteres
-
-?>
 ```
 
 ## 13. Manipulação de Arrays
 
-### Declaração
+### 1. Vetor unidimensional
 
 ```php
+$cores = array('vermelho', 'verde', 'amarelo');//versão 5 para baixo
+$cores = ['vermelho', 'verde', 'amarelo'];//mais moderna
 
+$cores = [];//declarando vazio
+$cores[] = 'vermelho';//inserindo no final
+$cores[] = 'verde';
+$cores[] = 'amarelo';
+
+$cores = [];//declarando vazio
+$cores[1] = 'vermelho';//inserindo no índice numérico
+$cores[3] = 'verde';
+$cores[5] = 'amarelo';
+
+$pessoa = [];//declarando vazio
+$pessoa['nome'] = 'Maria';//inserindo no índice do tipo string
+$pessoa['endereco'] = 'rua tal';
+$pessoa['nascimento'] = '1990-01-01';
+
+//percorrendo vetor
+foreach ($pessoa as $chave => $informacao)
+{
+    print $chave . ': ' . $informacao . '<br>';
+}
+```
+
+### 2. Vetor multidimensional
+
+```php
+//declarando
+$carros = [ 'palio' => ['cor' => 'azul',
+                        'marca' => 'fiat',
+                        'ano' => 2002],
+            'corsa' => ['cor' => 'prata',
+                        'marca' => 'GM',
+                        'ano' => 2003],
+          ];
+
+foreach ($carros as $modelo => $informacoes)
+{
+    print $modelo."<br>";
+    foreach ($informacoes as $atributo => $valor)
+    {
+        print "$atributo: $valor <br>";
+    }
+}
+```
+
+### 3. Funções de manipulação de vetores
+
+```php
+$cores = ['vermelho', 'verde', 'amarelo'];
+
+$cores = 'ciano';//adiciona no final
+
+array_push($cores, 'ciano');//adiciona no final
+
+array_unshift($cores, 'ciano');//adiciona no início
+
+array_shift($cores);//remove a primeira posição do vetor
+
+array_pop($cores);//remove a última posição do vetor
+
+$cores = array_reverse($cores);//inverte a ordem dos valores do vetor
+
+$resultado = array_merge($cores, ['ciano', 'cinza']);//mescla dois vetores
+
+$carros = [];
+$carros[10001] = 'Palio 2002';
+$carros[73933] = 'Corsa 2003';
+$carros[82634] = 'Celta 2005';
+$carros[12838] = 'Uno 1999';
+
+sort($carros);//ordena, mas perde os índices
+
+asort($carros);//ordena pelo conteúdo
+
+ksort($carros);//ordena pelas chaves
+
+array_keys($carros);//retorna um vetor com as chaves do vetor de parâmetro
+
+array_values($carros);//retorna um vetor com o conteúdo do veto de parâmetro
+
+count($carros);//retorna quantas posições tem o vetor
+
+in_array('Uno 1999', $carros);//verifica se está no vetor
+
+$data = '2013-10-20';
+$partes = explode('-', $data);//transforma em vetor separando pelo caracter escolhido
+print implode('-', $partes);//junta as partes do vetor com o caracter escolhido
 ```
