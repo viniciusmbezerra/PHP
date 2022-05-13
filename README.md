@@ -284,3 +284,107 @@ foreach ($lista as $fruta){
 
 ?>
 ```
+
+## 9. Requisição de arquivos
+
+```php
+<?php
+
+//importam um arquivo para dentro de outro
+
+include 'arquivo.php';
+//tenta executar o código mesmo que tenha dado erro na importação
+
+require 'arquivo.php';
+//já da um fatal error se a importação estiver errada
+
+include_once 'arquivo.php';
+require_once 'arquivo.php';
+//permite a importação desse aquivo uma única vez
+
+?>
+```
+
+## 10. Manipulação de funções
+
+```php
+<?php
+
+//variáveis declarada dentro de uma função só existem dentro do escopo de uma função
+$total = 0;
+function km2milhas($km)
+{
+    $total+=$km;
+    return $km * 0.6;
+}
+echo km2milhas(100);
+
+//o global define que uma variável pode ser acessada fora do contexto da função
+//NÃO É RECOMENDÁVEL, pois com uma variável fora de contexto perde-se o seu controle
+//ela poderia se altera em qualquer outro lugar do código
+$total = 0;
+function km2milhas($km)
+{
+    global $total;
+    $total+=$km;
+    return $km * 0.6;
+}
+echo km2milhas(100);
+echo $total;
+
+//o static mantém o valor da variável depois da execução da função
+function percorre($km)
+{  
+    static $total;
+    $total += $km;
+    print "percorreu mais $km\n de $total<br>";
+}
+percorre(100);
+percorre(100);
+percorre(100);
+
+//variáveis escalares(as normais) tem valores armazenados separadamente
+//por isso quando passadas como parâmetro de uma função não alteram o seu valor
+function incrementa($var, $valor)
+{
+    $var+=$valor;//$var não está manipulando o mesmo espaço da memória que $teste
+}
+$teste = 100;
+incrementa($teste, 20);
+var_dump($teste);//teste não altera o valor
+
+//para que $teste seja alterada deve-se passar por referência (&)
+function incrementa(&$var, $valor)//$var como referência de $teste com (&)
+{
+    $var+=$valor;//$var está manipulando o mesmo espaço da memória que $teste
+}
+$teste = 100;
+incrementa($teste, 20);
+var_dump($teste);//$teste altera o valor
+//SE INVÉS DE VARIÁVEL ESCALAR FOR OBJETO, A PASSAGEM POR REFERÊNCIA É AUTOMÁTICA
+
+//funções de ordenação trabalham internamente com referência
+$lista = ['a','b','c'];
+sort($lista);
+var_dump($lista);
+
+//funções anônimas não tem nome, elas são guardadas em variáveis
+$remove_acento = function($str) {
+    return str_replace(
+         ['á', 'é', 'í', 'ó', 'ú'],
+         ['a', 'e', 'i', 'o', 'u'],
+         $str
+    );
+};//precisa de ; quando é função anônima, porque é uma atribuição a uma variável
+var_dump($remove_acento('bábébíbóbú'));
+
+//sempre que precisar usar a função em outro contexto pode ser passada como parâmetro
+function teste($palavra, $funcao)
+{
+    $palavra = $funcao($palavra);
+    return strtoupper($palavra);
+}
+var_dump(teste('bábébíbóbú', $remove_acento));//passando função como parâmetro
+
+?>
+```
