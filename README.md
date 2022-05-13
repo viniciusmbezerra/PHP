@@ -66,7 +66,7 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
 ?>
 ```
 
-## 2. Variáveis
+## 3. Variáveis
 
 ```php
 <?php
@@ -130,7 +130,7 @@ print '<br>';
 ?>
 ```
 
-## 3. Tipagem
+## 4. Tipagem
 
 * O PHP é uma linguagem dinamicamente tipada, com inferência;
 
@@ -160,7 +160,7 @@ var_dump(calcula_imc(75, 1.8));
 ?>
 ```
 
-## 4. Superglobais
+## 5. Superglobais
 
 * Uma variável superglobal estará disponível em qualquer escopo e arquivo;
 
@@ -186,7 +186,7 @@ var_dump($_SESSION);
 ?>
 ```
 
-## 5. Constantes
+## 6. Constantes
 
 * Valores que não podem ser alterados depois de definidos
 
@@ -203,7 +203,7 @@ var_dump( __DIR__ );//diretório do arquivo
 ?>
 ```
 
-## 6. Operadores
+## 7. Operadores
 
 * Permitem realizar interações lógicas entre valores
 
@@ -230,7 +230,7 @@ $teste = ++ $valor;//o incremento é realizado primeiro
 ?>
 ```
 
-## 7. Estruturas de controle
+## 8. Estruturas de controle
 
 * Realizam operações com base em verificações
 
