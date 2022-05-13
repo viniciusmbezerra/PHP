@@ -497,6 +497,8 @@ print str_replace('a', 'e', $nome . $sobrenome);//substituir caracteres
 
 ## 13. Manipulação de Arrays
 
+### Declaração
+
 ```php
 
 ```
