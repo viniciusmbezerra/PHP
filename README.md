@@ -1,6 +1,8 @@
-# PHP: Introdução
+# PHP
 
-## 1. Instalação e Configuração para Windows
+## PHP: Introdução
+
+### 1. Instalação e Configuração para Windows
 
 1. [Instalar XAMPP](https://www.apachefriends.org/index.html)
 
@@ -42,7 +44,7 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
     * ``Fatal error``: nível de erro grave, "o programa aborta a execução na mesma hora";
     * ``Parse error``: nível de erro grave, "a sintaxe está errada";
 
-## 2. Estrutura
+### 2. Estrutura
 
 ```php
     $a = 'bonito';
@@ -60,7 +62,7 @@ Acessar a aplicação -> <http://localhost/nome_projeto>.
         * */
 ```
 
-## 3. Variáveis
+### 3. Variáveis
 
 ```php
 //declaração
@@ -121,7 +123,7 @@ var_dump($pessoa2);
 print '<br>';
 ```
 
-## 4. Tipagem
+### 4. Tipagem
 
 * O PHP é uma linguagem dinamicamente tipada, com inferência;
 
@@ -147,7 +149,7 @@ function calcula_imc(float $peso, float $altura): float
 var_dump(calcula_imc(75, 1.8));
 ```
 
-## 5. Superglobais
+### 5. Superglobais
 
 * Uma variável superglobal estará disponível em qualquer escopo e arquivo;
 
@@ -171,7 +173,7 @@ var_dump($_REQUEST);
 var_dump($_SESSION);
 ```
 
-## 6. Constantes
+### 6. Constantes
 
 * Valores que não podem ser alterados depois de definidos
 
@@ -186,7 +188,7 @@ var_dump( __LINE__ );//linha em que o comando se encontra
 var_dump( __DIR__ );//diretório do arquivo
 ```
 
-## 7. Operadores
+### 7. Operadores
 
 * Permitem realizar interações lógicas entre valores
 
@@ -209,7 +211,7 @@ $teste = ++ $valor;//o incremento é realizado primeiro
 // AND && | OR ||
 ```
 
-## 8. Estruturas de controle
+### 8. Estruturas de controle
 
 * Realizam operações com base em verificações
 
@@ -260,7 +262,7 @@ foreach ($lista as $fruta){
 }
 ```
 
-## 9. Requisição de arquivos
+### 9. Requisição de arquivos
 
 ```php
 //importam um arquivo para dentro de outro
@@ -276,7 +278,7 @@ require_once 'arquivo.php';
 //permite a importação desse aquivo uma única vez
 ```
 
-## 10. Manipulação de funções
+### 10. Manipulação de funções
 
 ```php
 //variáveis declaradas dentro de uma função só existem dentro do escopo de uma função
@@ -356,7 +358,7 @@ function teste($palavra, $funcao)
 var_dump(teste('bábébíbóbú', $remove_acento));//passando função como parâmetro
 ```
 
-## 11. Manipulação de Arquivos e Diretórios
+### 11. Manipulação de Arquivos e Diretórios
 
 ```php
 $handler = fopen('arquivos/teste1.txt', 'r');//abre arquivo, modo read
@@ -422,7 +424,7 @@ foreach ($arquivos as $arquivo){
 }
 ```
 
-## 12. Manipulação de Strings
+### 12. Manipulação de Strings
 
 ```php
 $nome = 'Maria';
@@ -454,9 +456,9 @@ print substr($nome . $sobrenome, -3);//retorna os 3 últimos caracteres
 print str_replace('a', 'e', $nome . $sobrenome);//substituir caracteres
 ```
 
-## 13. Manipulação de Arrays
+### 13. Manipulação de Arrays
 
-### 1. Vetor unidimensional
+#### 1. Vetor unidimensional
 
 ```php
 $cores = array('vermelho', 'verde', 'amarelo');//versão 5 para baixo
@@ -484,7 +486,7 @@ foreach ($pessoa as $chave => $informacao)
 }
 ```
 
-### 2. Vetor multidimensional
+#### 2. Vetor multidimensional
 
 ```php
 //declarando
@@ -506,7 +508,7 @@ foreach ($carros as $modelo => $informacoes)
 }
 ```
 
-### 3. Funções de manipulação de vetores
+#### 3. Funções de manipulação de vetores
 
 ```php
 $cores = ['vermelho', 'verde', 'amarelo'];
@@ -550,23 +552,9 @@ $partes = explode('-', $data);//transforma em vetor separando pelo caracter esco
 print implode('-', $partes);//junta as partes do vetor com o caracter escolhido
 ```
 
-# PHP: Orientação a Objetos
+## PHP: Orientação a Objetos
 
-### ``Encapsulamento``
-
-Define como um atributo ou método será acessado:
-
-* public: acessado livremente.
-* private: acessado internamente à classe.
-* protected: acessado internamente e por classes filhas.
-
-### ``Herança``
-
-### ``Polimorfismo``
-
-### ``Abstração``
-
-## 1. Classes
+### 1. Classes
 
 ``A classe é um molde que produz N objetos;``
 
@@ -708,9 +696,9 @@ foreach ($produto as $chave => $valor)
 }
 ```
 
-## 2. Relação entre objetos
+### 2. Relação entre objetos
 
-### 1. Relação por apontamento
+#### 1. Relação por apontamento
 
 `Uma classe aponta para para outra classe afim de complementar as informações necessárias`
 
@@ -796,7 +784,7 @@ print "Descrição: {$descricao} <br>";
 print "Nome fabricante: {$nome_fabr}";
 ```
 
-### 2. Relação por composição
+#### 2. Relação por composição
 
 ``Um objeto pai contém várias partes que são outros objetos que foram criados dentro do objeto pai;``
 
@@ -893,7 +881,7 @@ foreach ($p1->getCaracteristicas() as $caracteristica)
 }
 ```
 
-### 3. Relação por agregação
+#### 3. Relação por agregação
 
 ``Os objetos são criados separadamente e depois reunidos;``
 
@@ -984,4 +972,200 @@ foreach ($c1->getItens() as $item)
 }
 ```
 
-## 3. Herança 
+### 3. Herança
+
+``A capacidade de herdar comportamento entre classes é acionada pela palavra-chave extends,indicando a classe pai da qual vamos absorver o comportamento.``
+
+* Criando classe Conta
+
+```php
+class Conta
+{
+    //O protected é usado para definir que esses atributos serão usados por classes filhas
+    protected $agencia;
+    protected $conta;
+    protected $saldo;
+
+    public function __construct($agencia, $conta, $saldo)
+    {
+        $this->agencia = $agencia;
+        $this->conta = $conta;
+        if ($saldo > 0) {
+            $this->saldo = $saldo;
+        }
+    }
+
+    public function depositar($quantia)
+    {
+        if ($quantia > 0) {
+            $this->saldo += $quantia;
+        }
+    }
+
+    public function getSaldo()
+    {
+        return $this->saldo;
+    }
+
+    public function getInfo()
+    {
+        return "Agencia {$this->agencia}, Conta {$this->conta}";
+    }
+}
+```
+
+* Criando classe ContaPoupanca
+
+```php
+class ContaPoupanca extends Conta
+{
+    public function retirar($quantia)
+    {
+        if ($this->saldo >= $quantia) {
+            $this->saldo -= $quantia;
+        }
+        else
+        {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+* Criando classe ContaCorrente
+
+```php
+//Herdando todos os atributos e métodos da classe pai
+class ContaCorrente extends Conta
+{
+    protected $limite;
+
+    public function __construct($agencia, $conta, $saldo, $limite)
+    {
+        //usando o método construtor da classe pai
+        parent::__construct($agencia, $conta, $saldo);
+
+        $this->limite = $limite;
+    }
+    
+    public function retirar($quantia)
+    {
+        if (($this->saldo + $this->limite) >= $quantia) {
+            $this->saldo -= $quantia;
+        }
+        else
+        {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+* Usando as contas
+
+```php
+require_once 'classes/Conta.php';
+require_once 'classes/ContaCorrente.php';
+require_once 'classes/ContaPoupanca.php';
+
+$p = new ContaPoupanca('100', '123123', 500);
+
+//Os métodos foram herdados da classe Conta para a classe ContaPoupanca
+$p->depositar( 200 );
+echo $p->getSaldo();
+$p->retirar( 100 );
+```
+
+### 3. Polimorfismo
+
+``Método de mesmo nome porém uma implementação diferente;``
+
+```php
+require_once 'classes/Conta.php';
+require_once 'classes/ContaCorrente.php';
+require_once 'classes/ContaPoupanca.php';
+
+$contas = [];
+$contas[] = new ContaCorrente(1234, 'CC.1234', 100, 500);
+$contas[] = new ContaPoupanca(1235, 'PP.4566', 100)
+
+foreach ($contas as $conta)
+{
+    //O comando instanceof verifica se o objeto é filho/instância de determinada classe
+    if ($conta instanceof Conta) {
+        print $conta->getInfo() . '<br>';
+        print "-- Saldo atual: {$conta->getSaldo()} <br>";
+
+        $conta->depositar(200);
+        print "-- depósito de 200! <br>";
+        print "-- Saldo atual: {$conta->getSaldo()} <br>";
+
+        //O método retirar é de mesmo nome na ContaCorrente e na ContaPoupanca
+        //mas a operação é realizada de forma diferente
+        //observando que a ContaCorrente pode ter valores negativos no saldo e a ContaPoupanca não
+        if ($conta->retirar( 700 )) {
+            print "-- Retirada de 700 (OK) <br>";
+        }
+        else
+        {
+            print "-- Retirada  de 700 (não permitida) <br>";
+        }
+        print "-- Saldo atual: {$conta->getSaldo()} <br>";
+    }
+}
+```
+
+### 4. Abstração
+
+* Classe abstrata
+
+```php
+//o abstract impede que objetos sejam criados a partir desta classe
+//agora somente as classes filhas podem se instanciadas
+//em outras palavras ela só pode ser usada para criação de outras classes
+abstract class Conta
+{
+    ...
+}
+```
+
+* Classe final
+
+```php
+//o final indica que não é possível criar um classe filha a partir desta classe
+final class ContaPoupanca extends Conta
+{
+    ...
+}
+```
+
+* Método Abstrato
+
+```php
+//obrigar que as classes filhas implementem determinado método assinado na classe pai
+abstract class Conta
+{
+    ...
+    abstract function retirar($quantia);//assinatura do método abstrato
+    ...
+}
+```
+
+* Método Final
+
+```php
+//Um método final não pode ser redefinido em uma classe final
+class ContaPoupanca extends Conta
+{
+    ...
+    public final function retirar($quantia)
+    {
+        ...
+    }
+    ...
+}
+```
+
+### 5. Encapsulamento
