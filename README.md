@@ -1,4 +1,4 @@
-# PHP
+# PHP: Introdução
 
 ## 1. Instalação e Configuração para Windows
 
@@ -549,3 +549,439 @@ $data = '2013-10-20';
 $partes = explode('-', $data);//transforma em vetor separando pelo caracter escolhido
 print implode('-', $partes);//junta as partes do vetor com o caracter escolhido
 ```
+
+# PHP: Orientação a Objetos
+
+### ``Encapsulamento``
+
+Define como um atributo ou método será acessado:
+
+* public: acessado livremente.
+* private: acessado internamente à classe.
+* protected: acessado internamente e por classes filhas.
+
+### ``Herança``
+
+### ``Polimorfismo``
+
+### ``Abstração``
+
+## 1. Classes
+
+``A classe é um molde que produz N objetos;``
+
+``Cada objeto terá atributos e métodos de acordo com o que foi definido na classe;``
+
+```php
+class Produto
+{
+    //atributos do tipo privado só pode ser manipulados dentro do contexto da própria classe
+    private $descricao;
+    private $estoque;
+    //atributos do tipo public podem ser manipulados em qualquer lugar do código
+    public $preco;
+
+    //O método construtor inicia um objeto com valores que serão passados por parâmetros
+    //sem esse método o objeto irá iniciar com o valor null e depois seriam inseridos os dados
+    public function __construct($descricao, $estoque, $preco)
+    {
+        //o $this referencia ao próprio objeto que está sendo criado
+        $this->setDescricao($descricao);
+        $this->setEstoque($estoque);
+        $this->setPreco($preco);
+    }
+
+    //Cada função a seguir é um método do objeto, que trará funcionalidade
+    //funções do tipo public podem ser acessadas fora do contexto da classe
+    public function setDescricao($descricao)
+    {
+        if (is string($descricao))
+        {
+            $this->descricao = $descricao;
+        }
+    }
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    public function setEstoque($estoque)
+    {
+        if (is numeric($estoque))
+        {
+            $this->estoque = $estoque;
+        }
+    }
+    public function getEstoque()
+    {
+        return $this->estoque;
+    }
+
+    public function setPreco($preco)
+    {
+        if (is string($preco))
+        {
+            $this->preco = $preco;
+        }
+    }
+    public function getPreco()
+    {
+        return $this->preco;
+    }
+
+    public function aumentarEstoque($unidades)
+    {
+        if (is numeric($unidades) and $unidades >= 0)
+        {
+            $this->estoque -= $unidades;
+        }
+    }
+    public function diminuirEstoque($unidades)
+    {
+        if (is numeric($unidades) and $unidades >= 0)
+        {
+            $this->estoque -= $unidades;
+        }
+    }
+    public function reajustarPreco($percentual)
+    {
+        if (is numeric($percentual) and $percentual >= 0)
+        {
+            $this->preco *= (1 + ($percentual/100));
+        }
+    }
+
+    //O método destrutor é usado para fazer com que o objeto deixe a memória no fim da execução
+    public function __destruct()
+    {
+        echo "DESTRUÍDO: Objeto {$this->getDescricao()} ";
+    }
+}
+
+//Criando um objeto ou instanciando uma classe
+$p1 = new Produto('Chocolate', 10, 8);
+
+echo "O estoque de {$p1->getDescricao()} é {$p1->getEstoque()} <br>";
+echo "O estoque de {$p1->getDescricao()} é {$p1->getPreco()} <br>";
+
+
+$p1->aumentarEstoque(10);
+$p1->diminuirEstoque(5);
+$p1->reajustarPreco(50);
+
+//Para forçar que o objeto deixe a memória antes do destrutor ser executado
+$p1 = null;
+unset($p1);
+```
+
+* Conversões de tipo
+
+```php
+//Criando um objeto a partir da classe padrão do PHP
+$produto = new stdClass;
+$produto->descricao = 'Chocolate';
+$produto->estoque = 100;
+$produto->preco = 7;
+
+//Convertendo um objeto em um array
+$vetor1 = (array) $produto;
+
+//Convertendo um array em um objeto
+$vetor2 = [
+    'descricao' => 'Café',
+    'estoque' => 100,
+    'preco' => 7
+];
+$produto2 = (object) $vetor2;
+
+//Colocando dados de um vetor em um objeto
+$produto = [];
+$produto['descricao'] = 'Chocolate';
+$produto['estoque'] = 100;
+$produto['preco'] = 7;
+
+$objeto = new stdClass;
+
+foreach ($produto as $chave => $valor)
+{
+    $objeto->$chave = $valor;
+}
+```
+
+## 2. Relação entre objetos
+
+### 1. Relação por apontamento
+
+`Uma classe aponta para para outra classe afim de complementar as informações necessárias`
+
+* Definindo classe Produto
+
+```php
+class Produto
+{
+    private $descricao;
+    private $estoque;
+    private $preco;
+    private $fabricante;//este atributo fará o apontamento para o objeto que corresponde ao fabricante deste produto
+
+    public function __construct($descricao, $estoque, $preco)
+    {
+        $this->descricao = $descricao;
+        $this->estoque = $estoque;
+        $this->preco = $preco;
+    }
+
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    //Nessa função temos uma indução ao tipo, que certificará que a variável $fabricante é da classe Fabricante, se não for vai retornar um erro
+    public function setFabricante(Fabricante $fabricante)
+    {
+        $this->fabricante = $fabricante;
+    }
+
+    public function getFabricante()
+    {
+        return $this->fabricante;
+    }
+}
+```
+
+* Definindo classe Fabricante
+
+```php
+class Fabricante
+{
+    private $nome;
+    private $endereco;
+    private $documento;
+
+    public function __construct($nome, $endereco, $documento)
+    {
+        $this->nome = $nome;
+        $this->endereco = $endereco;
+        $this->documento = $documento;
+    }
+    
+    public function getNome()
+    {
+        return $this->nome;
+    }
+}
+```
+
+* Criando a associação por apontamento entre Produto e Fabricante
+
+```php
+//importando as classes
+require_once 'classes/Fabricante.php';
+require_once 'classes/Produto.php';
+
+//criando os objetos
+$p1 = new Produto('Chocolate', 10, 7);
+$f1 = new Fabricante('Fabrica de Chocolate', 'Rua tal ...', '93.292901.200');
+
+$p1->setFabricante($f1);//declarando fabricante no produto
+```
+
+* Exibindo informações
+
+```php
+$descricao = $p1->getDescricao();
+$nome_fabr = $p1->getFabricante()->getNome();//encadeamento de chamada
+
+print "Descrição: {$descricao} <br>";
+print "Nome fabricante: {$nome_fabr}";
+```
+
+### 2. Relação por composição
+
+``Um objeto pai contém várias partes que são outros objetos que foram criados dentro do objeto pai;``
+
+``TODO -> PARTE;``
+
+``As partes só existem enquanto o todo existe;``
+
+* Criando a classe característica
+
+```php
+class Caracteristica
+{
+    private $nome;
+    private $valor;
+
+    public function __construct($nome, $valor)
+    {
+        $this->nome = $nome;
+        $this->valor = $valor;
+    }
+
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    public function getValor()
+    {
+        return $this->valor;
+    }
+}
+```
+
+* Criando a classe produto
+
+```php
+class Produto
+{
+    private $descricao;
+    private $estoque;
+    private $preco;
+    private $caracteristicas;
+
+    public function __construct($descricao, $estoque, $preco)
+    {
+        $this->descricao = $descricao;
+        $this->estoque = $estoque;
+        $this->preco = $preco;
+        $this->caracteristicas = [];
+    }
+
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    public function addCaracteristica($nome, $valor)
+    {
+        $this->caracteristicas[] = new Caracteristica( $nome, $valor );
+    }
+
+    public function getCaracteristicas()
+    {
+        return $this->caracteristicas;
+    }
+}
+```
+
+* Criando a composição de Produto com as Caracteristicas
+
+```php
+require_once 'classes/Produto.php';
+require_once 'classes/Caracteristica.php';
+
+$p1 = new Produto('Chocolate', 10, 7);
+
+$p1->addCaracteristica('Cor', 'Branco');
+$p1->addCaracteristica('Peso', '500gr');
+```
+
+* Exibindo informações
+
+```php
+print 'Produto: ' . $p1->getDescricao() . '<br>';
+
+//percorrendo vetor características
+foreach ($p1->getCaracteristicas() as $caracteristica)
+{
+    //chamando métodos para cada característica
+    $nome = $caracteristica->getNome();
+    $valor = $caracteristica->getValor();
+
+    print "Característica {$nome} = {$valor} <br>";
+}
+```
+
+### 3. Relação por agregação
+
+``Os objetos são criados separadamente e depois reunidos;``
+
+``As partes não dependem do todo para existir;``
+
+``Uma cesta de compras: uma cesta pode ter vários produtos, e um produto pode estar em várias cestas;``
+
+* Criando a classe Cesta
+
+```php
+class Cesta
+{
+    private $hora;
+    private $itens;
+
+    public function __construct( $hora, $itens )
+    {
+        $this->hora = date('Y-m-d H:i:s');
+        $this->itens = [];
+    }
+
+    public function addItem(Produto $produto)
+    {
+        $this->itens = $produto;
+    }
+
+    public function getItens()
+    {
+        return $this->itens;
+    }
+}
+```
+
+* Criando a classe Produto
+
+```php
+class Produto
+{
+    private $descricao;
+    private $estoque;
+    private $preco;
+
+    public function __construct($descricao, $estoque, $preco)
+    {
+        $this->descricao = $descricao;
+        $this->estoque = $estoque;
+        $this->preco = $preco;
+    }
+
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+}
+```
+
+* Criando a agregação entre Cesta e Produto
+
+```php
+require_once 'classes/Cesta.php';
+require_once 'classes/Produto.php';
+
+$c1 = new Cesta;
+
+$p1 = new Produto('Chocolate', 10, 5);
+$p2 = new Produto('Café', 100, 7);
+$p3 = new Produto('Mostarda', 50, 3);
+
+//adicionando objetos(Produtos) dentro do array itens do objeto $c1
+$c1->addItem( $p1 );
+$c1->addItem( $p3 );
+$c1->addItem( $p2 );
+```
+
+* Exibindo informações
+
+```php
+print_r($c1);
+
+//$c1 tem o array de itens;
+//este array contém os objetos inseridos nele;
+//cada um desses objetos é um produto;
+//e cada produto tem métodos;
+//logo é possível chamar esse métodos a partir de cada posição do vetor itens;
+foreach ($c1->getItens() as $item)
+{
+    print "Item: {$item->getDescricao()} <br>";
+}
+```
+
+## 3. Herança 
