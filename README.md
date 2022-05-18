@@ -1225,7 +1225,9 @@ print $p2->getNome() . '<br>';
 print $p2->getNomeGenero() . '<br>';
 ```
 
-* Métodos e Atributos static
+* Atributo static
+
+``É um atributo que não precisa de um objeto para existir;``
 
 ```php
 class Software
@@ -1250,4 +1252,31 @@ class Software
 //o id é gerado automaticamente
 $s1 = new Software('Gimp');
 $s2 = new Software('Gnumeric');
+```
+
+* Método static
+
+``É um método que não precisa de um objeto para existir;``
+
+```php
+class Software
+{
+    private $id;
+    private $nome;
+    private static $contador;
+
+    public function __construct($nome)
+    {
+        self::$contador ++;
+        $this->id = self::$contador;
+        $this->nome = $nome;
+    }
+
+    //Método static
+    public static function getContador()
+    {
+        return self::$contador;
+        //não é possível usar a palavra chave $this, logo que não se tem um objeto para referenciar
+    }
+}
 ```
