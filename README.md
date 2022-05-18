@@ -646,7 +646,7 @@ class Produto
     }
 }
 
-//Criando um objeto ou instanciando uma classe
+//Criando um objeto ou instanciando um objeto
 $p1 = new Produto('Chocolate', 10, 8);
 
 echo "O estoque de {$p1->getDescricao()} é {$p1->getEstoque()} <br>";
@@ -1093,7 +1093,7 @@ $contas[] = new ContaPoupanca(1235, 'PP.4566', 100)
 
 foreach ($contas as $conta)
 {
-    //O comando instanceof verifica se o objeto é filho/instância de determinada classe
+    //O comando instanceof verifica se o objeto é filho de determinada classe
     if ($conta instanceof Conta) {
         print $conta->getInfo() . '<br>';
         print "-- Saldo atual: {$conta->getSaldo()} <br>";
@@ -1123,7 +1123,7 @@ foreach ($contas as $conta)
 
 ```php
 //o abstract impede que objetos sejam criados a partir desta classe
-//agora somente as classes filhas podem se instanciadas
+//agora somente as classes filhas podem se criar objetos
 //em outras palavras ela só pode ser usada para criação de outras classes
 abstract class Conta
 {
@@ -1169,3 +1169,85 @@ class ContaPoupanca extends Conta
 ```
 
 ### 5. Encapsulamento
+
+``O encapsulamento visa proteger os atributos de uma classe a partir de métodos;``
+
+``Ou seja, só quem poder realizar operações nesses atributos são os métodos;``
+
+* ``Public``: pode ser acessado em qualquer contexto;
+
+* ``Private``: só pode ser acessado pela própria classe, as classes filhas não podem acessar;
+
+* ``Protected``: só pode ser acessado no contexto da classe pai e da filha;
+
+### 6. Membros de Classe
+
+``Os membros são valores definidos para a classe``
+
+```php
+class Pessoa
+{
+    private $nome;
+    private $genero;
+
+    //definindo uma constante que pertence a classe
+    //isto é um membro da classe
+    private const GENEROS = ['M' => 'Masculino', 'F' => 'Feminino'];
+
+    public function __construct($nome, $genero)
+    {
+        $this->nome = $nome;
+        $this->genero = $genero;
+    }
+
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    public function getNomeGenero()
+    {
+        //o self é usado para se referenciar a própria classe
+        //isso significa o mesmo de fazer: Pessoa::GENEROS[]
+        //mas como estamos dentro da classe é usado o self
+        return self::GENEROS[ $this->genero ];
+    }
+}
+
+print Pessoa::GENEROS['F'];//não é possível acessar de fora porque é private
+
+$p1 = new Pessoa('Maria da Silva', 'F');
+$p2 = new Pessoa('Carlos Pereira', 'M');
+
+print $p1->getNome() . '<br>';
+print $p1->getNomeGenero() . '<br>';
+print $p2->getNome() . '<br>';
+print $p2->getNomeGenero() . '<br>';
+```
+
+* Métodos e Atributos static
+
+```php
+class Software
+{
+    //Criando um auto incremento no ID, atributo static
+    private $id;
+    private $nome;
+
+    //Uma variável static armazena o seu valor mesmo depois da chamada de uma classe
+    private static $contador;
+
+    public function __construct($nome)
+    {
+        //novamente, o self é usado para fazer a referência a própria classe
+        //é por meio dele que se pode acessar atributos e métodos da classe dentro dela mesma
+        //isso se aplica ao que pertence a classe, para se referenciar ao objeto é usado o $this
+        self::$contador ++;
+        $this->id = self::$contador;
+        $this->nome = $nome;
+    }
+}
+//o id é gerado automaticamente
+$s1 = new Software('Gimp');
+$s2 = new Software('Gnumeric');
+```
