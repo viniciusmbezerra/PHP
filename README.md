@@ -1280,3 +1280,150 @@ class Software
     }
 }
 ```
+
+### 7. Funções para Objetos
+
+```php
+//retorna os métodos disponíveis
+get_class_methods('Classe');
+
+//retorna o conteudo dos atributos públicos de determinado objeto
+get_object_vars($objeto);
+
+//retorna a classe do objeto
+get_class($objeto);
+
+//retorna a classe pai do objeto ou de uma classe
+get_parent_class($objeto);
+get_parent_class('Classe');
+
+//verifica se um objeto ou classe é filho de uma classe
+is_subclass_of($objeto, 'Classe');
+is_subclass_of('Classe1', 'Classe2');
+
+//testar se um método existe ou não
+method_exists($objeto, 'Método');
+
+//função callback, permite passar o nome da função de forma dinâmica
+call_user_func( $funcao, 'parâmetro' );
+//chamando uma função que está dentro de uma classe ou objeto
+call_user_func( [$classe, $metodo], 'parâmetro' );
+call_user_func( [$objeto, $metodo], 'parâmetro' );
+```
+
+### 8. Acoplamento e Interfaces
+
+* Acoplamento
+
+    ``Mede o quanto um módulo (classe, método, componente) conhece e depende de outro;``
+
+    ``O objetivo é criar modelos com baixo acoplamento;``
+
+    ``O alto acoplamento diminui a reusabilidade porque dois objetos não podem ser usados sozinhos;``
+
+    ``Não existe zero acoplamento, as partes precisam conversar;``
+
+* Interface
+
+    ``É um tipo abstrato de dados;``
+
+    ``Conjunto de métodos que definem um serviço prestado;``
+
+    ``Representa uma fronteira definida em uma comunicação;``
+
+    ``É como um contrado de prestação de serviços entre duas classes;``
+
+    ``Uma classe fornece. Para ela, a interface é realizada;``
+
+    ``Uma classe consome. Para ela, interface é utilizada;``
+
+    ``O uso de interfaces permite uma melhor "substituição" de partes;``
+
+    ``A comunicação entre classes fica explícita dentro da interface;``
+
+Criando a classe produto
+
+```php
+//realizando a interface na classe Produto, porque ela tem o método getPreco()
+class Produto implements OrcavelInterface
+{
+    private $nome;
+    private $preco;
+
+    public function __construct($nome, $preco)
+    {
+        $this->nome = $nome;
+        $this->preco = $preco;
+    }
+
+    public function getNome()
+    {
+        return $this->nome;
+    }
+    
+    //Método comum usado pela interface
+    public function getPreco()
+    {
+        return $this->preco;
+    }
+}
+```
+
+Criando a classe Servico
+
+```php
+//realizando a interface na classe Sevico, porque ela tem o método getPreco()
+class Servico implements OrcavelInterface
+{
+    private $nome;
+    private $preco;
+
+    public function __construct($nome, $preco)
+    {
+        $this->nome = $nome;
+        $this->preco = $preco;
+    }
+
+    //Método comum usado pela interface
+    public function getPreco()
+    {
+        return $this->preco;
+    }
+}
+```
+
+Criando a classe Orcamento
+
+```php
+class Orcamento
+{
+    private $itens;
+
+    //certificando que a classe passada por parâmetro tenha contrado com a OrcavelInterface
+    public function adiciona(OrcavelInterface $item, $qtde)
+    {
+        $this->itens[] = [$qtde, $item];
+    }
+    
+    public function calculaTotal()
+    {
+        $total = 0;
+        foreach ($this->itens as $item)
+        {
+            //utilizando getPreco() dinamicamente
+            $total += ($item[0] * $item[1]->getPreco());
+        }
+        return $total;
+    }
+}
+```
+
+Criando a Interface entre as classes
+
+```php
+//Interface que define como método comum o getPreco()
+interface OrcavelInterface
+{
+    public function getPreco();
+}
+```
