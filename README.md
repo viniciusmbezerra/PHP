@@ -1427,3 +1427,155 @@ interface OrcavelInterface
     public function getPreco();
 }
 ```
+
+## 3. PHP: Design Pattern
+
+``"Um Pattern descreve um problema que ocorre com frequência em nosso ambiente, e então explica a essência da solução para este problema, de forma que tal solução possa ser utilizada milhões de outras vezes..."``
+
+*Chistopher Alexander (1936 arquiteto)*
+
+* Padrões são descobertos, não inventados;
+* Na maioria das vezes, já utilizamos algum padrão, sem saber;
+* O conhecimento dos padrões nos leva a distinguir em quais situações utilizá-los;
+* Não existe padrão melhor ou pior, existem padrões que são mais indicados para determinadas situações;
+* Um padrão não é uma solução pronta;
+* Podem ser usados para resolverem diferentes problema em contextos diferentes;
+
+### 1. Sigleton
+
+* É necessário compartilhar informações dentro de diferentes contextos;
+* Variáveis globais, são do mal, falta encapsulamento;
+* Uma classe é visível globalmente;
+* Criar uma classe que permite apenas uma instanciação;
+* Ou seja, só haverá um objeto desta classe;
+
+```php
+class Preferencias
+{
+    private $data;
+    
+    //o atributo estático não precisa não perde o seu valor após a criação de um objeto
+    //ele é guardado na memória por referência ao seu endereço
+    //neste caso $instance é um atributo que armazena um objeto
+    private static $instance;
+
+    //método construtor privado para que não possa ser acessado fora da classe
+    private function __construct() 
+    {
+        //recebendo dados do arquivo .ini
+        $this->data = parse_ini_file('application.ini');
+    }
+
+    //função getInstance, utilizada para fazer o controle de criação de instâncias
+    //certificando que apenas um objeto vai ser criado
+    public static function getInstance() 
+    { 
+        //verifica se não existe instância/objeto
+        if (empty(self::$instance)) {
+            //se não existe, é criada a partir do construtor
+            self::$instance = new self;
+            //o self está chamando o construtor
+            //ele é utilizado por estamos dentro da classe
+        }
+        //então será retornado o único objeto que esta classe permite criar
+        return self::$instance;
+    }
+
+    public function getData($key) 
+    {
+        return $this->data[$key];
+    }
+
+    public function setData($key, $value) 
+    {
+        $this->data[$key] = $value;
+    }
+
+    //salvando alterações dentro do arquivo .ini
+    public function save() 
+    {
+        $string = '';
+        if ($this->data)
+        {
+            foreach ($this->data as $key => $value)
+            {
+                $string . "{$key} = \"{$value}\" \n";
+            }
+        }
+        file_put_contents('application.ini', $string);
+    }
+}
+```
+
+### 2. Facade
+
+* ``Ajuda a diminuir o acoplamento;``
+* ``Oferece uma interface única para um conjunto de interfaces de um subsistema;``
+* ``O APP ficará dependente do Facade, não do subsistema;``
+
+### 3. Adapter
+
+```php
+class ClienteService
+{
+    public static function informaInadimplentes($mailer)
+    {
+        $inadimplentes = Cliente::getInadimplentes();
+        foreach ($inadimplentes as $cliente)
+        {
+            $mailer->addAddress($cliente->email);
+            $mailer->setTextBody("$cliente->nome está inadimplente");
+            $mailer->send();
+        }
+    }
+}
+
+//chamando classe antiga
+ClienteService::informaInadimplentes( new OldEmailService );
+
+//chamando classe adaptada
+ClienteService::informaInadimplentes( new PHPMailerAdapter );
+```
+
+Criando classe adapatada
+
+```php
+class PHPMailerAdapter
+{
+    private $pm;
+
+    function __construct()
+    {
+        $this->pm = new PHPMailer(true);
+        $this->pm->CharSet='utf-8';
+    }
+
+    function setForm($from, $name)
+    {
+        $this->pm->From = $from;
+        $this->pm->FromName = $name;
+    }
+
+    function setSubject($subject)
+    {
+        $this->pm->Subject = $subject;
+    }
+
+    public function setTextBody($body)
+    {
+        $this->pm->Body = $body;
+        $this->pm->isHTML(false);
+    }
+
+    public function addAddress($address, $name = '')
+    {
+        $this->pm->AddAddress($address, $name);
+    }
+
+    public function send()
+    {
+        $this->pm->Send();
+        return true;
+    }
+}
+```
