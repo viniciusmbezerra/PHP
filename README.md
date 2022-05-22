@@ -1579,3 +1579,105 @@ class PHPMailerAdapter
     }
 }
 ```
+
+## 4. PHP: Acesso a base de dados
+
+### 1. Conexão estruturada
+
+Com Postgre
+
+```php
+//cria a conexão com o banco
+$conn = pg_connect('host=localhost port=5432 db name=nome_banco user=nome_usuario password=senha');
+
+//inserindo dados no banco
+pg_query( $conn, "INSERT INTO nome_tabela VALUES('valores')");
+
+//listando dados
+$query = 'SELECT * FROM tabela';
+$result = pg_query( $conn, $query );
+if ($result)
+{
+    while ($row = pg_fetch_assoc($result))
+    {
+        print $row['campo'].'-'.$row['campo'].'<br>';
+    }
+}
+
+//fecha a conexão com o banco
+pg_close($conn);
+```
+
+Com Mysql
+
+```php
+//cria a conexão com o banco
+$conn = mysqli_connect('127.0.0.1', 'nome_usuario', 'senha', 'nome_banco');
+
+//inserindo dados no banco
+mysqli_query( $conn, "INSERT INTO tabela VALUES('valores')" );
+
+//listando dados
+$query('SELECT * FROM tabela');
+$result = mysqli_query($conn, $query);
+if ($result)
+{
+    while ($row = mysqli_fetch_assoc($result))
+    {
+        echo $row['campo'].' - '.$row['campo'].'<br>';
+    }
+}
+
+//fecha a conexão com o banco
+mysqli_close($conn);
+```
+
+### 2. Conexão Orientada a Objetos
+
+Com Postgre
+
+```php
+//biblioteca PDO, vantagens:
+//- A única coisa que muda entre um banco de dados e outro é a string de conexão
+//- Os métodos são os mesmos, independente do banco de dados
+try
+{
+    //criando conexão com o banco
+    $conn = new PDO('pgsql:dbname=nome_banco;user=nome_usuario;password=senha;host=localhost');
+    //mudando o modo de tratamento de erros do PDO para exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    //inserindo dados no banco
+    $conn->exec("INSERT INTO tabela VALUES('valores')");
+
+    //listando dados
+    $result = $conn->query("SELECT * FROM tabela");//$result é um objeto e não um vetor
+    if ($result)
+    {
+        //cada vez que o $result roda no foreach ele aciona um método interno que busca os dados e retorna em array
+        // foreach ($result as $row)
+
+        // while ($row = $result->fetch( PDO::FETCH_OBJ))
+        while ( $row = $result->fetchObjetct())
+        {
+            print $row->campo.' - '.$row->campo.'<br>';
+        }
+    }
+
+    //fechando conexão
+    $conn = null;
+}//se algum comando der errado, gera uma exeção que será tratada no bloco catch
+catch (PDOExeption $e)
+{
+    print 'Erro: '.$e->getMessage();
+}
+
+```
+
+Com Mysql
+
+```php
+//todas as operações são iguais só muda a string de conexão
+$conn = new PDO('mysql:host=127.0.0.1;port=3306;dbname=nome_banco','nome_usuario','senha');
+```
+
