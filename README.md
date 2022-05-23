@@ -1681,3 +1681,11 @@ Com Mysql
 $conn = new PDO('mysql:host=127.0.0.1;port=3306;dbname=nome_banco','nome_usuario','senha');
 ```
 
+## 4. PHP: Tratamento de erros
+
+```php
+//Não é aconselhavél usar a função die() porque ela para toda a execução do programa
+if (verificação de erro) {
+   die("Erro");
+}
+```
