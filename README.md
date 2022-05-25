@@ -1683,9 +1683,28 @@ $conn = new PDO('mysql:host=127.0.0.1;port=3306;dbname=nome_banco','nome_usuario
 
 ## 4. PHP: Tratamento de erros
 
+* Condição para erros em um arquivo
+
 ```php
-//Não é aconselhavél usar a função die() porque ela para toda a execução do programa
-if (verificação de erro) {
-   die("Erro");
+if (!file_exists($filename))
+{
+    throw new Exception("Arquivo {$this->filename} não encontrado.");
+}
+if (!is_readable($filename))
+{
+    throw new Exception("Arquivo {$this->filename} não pode ser lido.");
+}
+```
+
+* Recepção de erros em outro arquivo
+
+```php
+try
+{
+    //comandos passados aqui
+}
+catch (Exception $e )//recebendo e tratando possíveis exceções aqui
+{
+    print $e->getMessage();
 }
 ```
