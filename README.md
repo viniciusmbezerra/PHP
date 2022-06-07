@@ -1681,7 +1681,9 @@ Com Mysql
 $conn = new PDO('mysql:host=127.0.0.1;port=3306;dbname=nome_banco','nome_usuario','senha');
 ```
 
-## 4. PHP: Tratamento de erros
+## 4. PHP: tópicos especiais em OO
+
+### 1. Tratamento de erros
 
 * Condição para erros em um arquivo
 
@@ -1706,5 +1708,193 @@ try
 catch (Exception $e )//recebendo e tratando possíveis exceções aqui
 {
     print $e->getMessage();
+}
+```
+
+### 2. Métodos mágicos/interceptadores
+
+```php
+class Titulo
+{
+    public function __construct(){}
+    //cria um objeto recebendo parâmetros ou não, ex: new Titulo;
+
+    public function __destruct(){}
+    //deleta um objeto, ex: unset($objeto);
+
+    public function __get($propriedade){}
+    //sempre que quisermos interceptar o acesso a uma propriedade inexistente ou private
+
+    public function __set($propriedade, $conteudo){}
+    //sempre que quisermos interceptar a inserção de um dado privado ou inexistente
+
+    public function __isset($propriedade){}
+    //verifica se tem valor
+
+    public function __toString($objeto){}
+    //retorna como o objeto será exibido quando for chamado em forma de string
+
+    public function __clone(){}
+    //define o que acontecerá com os dados do objeto clonado
+
+    public function __call(){}
+    //é chamada sempre que uma função privada ou inexistente é chamada
+}
+
+//clonando um objeto
+$titulo2 = clone $titulo1;
+```
+
+### 3. Manipulando arquivos XML
+
+* Simple XML
+
+```php
+$xml = simplexml_load_file('paises.xml');//lendo o arquivo xml
+
+//acessando as propriedades através da sintaxe de objeto
+print 'Nome: ' . $xml->nome . '<br>';
+print 'Idioma: ' . $xml->idioma . '<br>';
+print 'Capital: ' . $xml->capital . '<br>';
+print 'Moeda: ' . $xml->moeda . '<br>';
+print 'Prefixo: ' . $xml->prefixo . '<br>';
+
+//acessando dinamicamente, children() busca e retorna as propriedades filhas
+foreach ($xml->children() as $elemento => $valor)
+{
+    print "$elemento : $valor <br>";
+}
+
+//acessando propriedades filhas
+print 'Clima: ' . $xml->geografia->clima . '<br>';
+print 'Costa: ' . $xml->geografia->costa . '<br>';
+print 'Pico: ' . $xml->geografia->pico . '<br>';
+
+//alterando arquivo
+$xml->moeda = 'Novo Real (NR$)';
+$xml->geografia->clima = 'temperado';
+
+//adicionando campo filho
+$xml->addChild('presidente', 'Jair Bolsonaro');
+
+//confirmando alterações
+file_put_contents('paises.xml', $xml->asXML());
+
+//acessando elementos repetitivos
+print $xml->estados->nome[0];
+foreach ($xml->estados->nome as $estado)
+{
+    print 'Estado: ' . $estado . '<br>';
+}
+
+//acessando atributos
+foreach ($xml->estados->estado as $estado)
+{
+    print 'Estado: ' . $estado['nome'] . 
+          ' Capital: ' . $estado['capital'] . '<br>';
+}
+
+//acessando atributos de maneira dinâmica
+foreach ($xml->estados->estado as $estado)
+{
+    foreach ($estado->attributes() as $key => $value)
+    {
+        print "$key : $value";
+    }
+    echo '<br>';
+}
+```
+
+* XML DOM
+
+```php
+//leitura com a classe DOMDocument
+$doc = new DOMDocument;
+$doc->load('bases.xml');
+
+$bases = $doc->getElementsByTagName('base');//retorna um vetor
+
+foreach ($bases as $base)
+{
+    print 'ID: ' . $base->getAttribute('id') . '<br>';
+    $names = $base->getElementsByTagName('name');
+    $hosts = $base->getElementsByTagName('host');
+    $types = $base->getElementsByTagName('type');
+    $users = $base->getElementsByTagName('user');
+
+    print 'Name: ' . $names->item(0)->nodeValue . '<br>';
+    print 'Host: ' . $hosts->item(0)->nodeValue . '<br>';
+    print 'Type: ' . $types->item(0)->nodeValue . '<br>';
+    print 'User: ' . $users->item(0)->nodeValue . '<br>';
+}
+
+//manipulando documento
+$dom = new DOMDocument('1.0', 'UTF-8');//passando versão e codificação
+$dom->formatOutput = true;//formatar a saída com a identação correta
+
+//criando tags
+$bases = $dom->createElement('bases');
+$base = $dom->createElement('base');
+//colocando tag dentro de outra
+$bases->appendChild($base);
+
+//criando atributo
+$atr = $dom->createAttribute('id');
+$atr->value = '1';//atribuindo valor
+$base->appendChild($atr);//adicionando atributo a tag
+
+//criando tags filhas
+$base->appendChild( $dom->createElement('nome', 'teste') );
+$base->appendChild( $dom->createElement('host', '192.168.0.1') );
+$base->appendChild( $dom->createElement('type', 'mysql') );
+$base->appendChild( $dom->createElement('user', 'mary') );
+
+//salvando alterações no objeto pai
+print $dom->saveXML($bases);
+```
+
+### 4. Manipulando arquivos com a biblioteca SPL
+
+* SplFileInfo
+
+```php
+//criando objeto com endereço do arquivo que será usado
+$file = new SplFileInfo('spl_file_info.php');
+
+//buscando informações sobre o arquivo de forma dinâmica
+print 'Nome: ' . $file->getFileName();
+print 'Extensão: ' . $file->getExtension();
+print 'Tamanho: ' . $file->getSize();
+print 'Tipo: ' . $file->getType();
+print 'Gravável: ' . $file->isWritable();
+```
+
+* SplFileObject
+
+```php
+//criando objeto com endereço do arquivo que será usado
+$file = new SplFileObjetct('spl_file_object.php');
+
+//buscando informações sobre o arquivo
+print 'Nome: ' . $file->getName();
+print 'Extensão: ' . $file->getExtension();
+
+//lendo e escrevendo em um arquivo
+$file2 = new SplFileObject('novo.txt', 'w');
+//fwrite retorna quantos bytes foram escritos em cima do arquivo
+$bytes = $file2->fwrite('Olá Mundo PHP');
+print 'Bytes: ' . $bytes;
+
+//percorrendo um arquivo usando while e foreach
+$file = new SplFileObject('spl_file_object2.php');
+
+while (!$file->eof())
+{
+    print $file->fgets();
+}
+
+foreach ($file as $linha => $conteudo)
+{
+    print "$linha: $conteudo";
 }
 ```
