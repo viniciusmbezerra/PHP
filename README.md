@@ -905,7 +905,7 @@ class Cesta
 
     public function addItem(Produto $produto)
     {
-        $this->itens = $produto;
+        $this->itens[] = $produto;
     }
 
     public function getItens()
